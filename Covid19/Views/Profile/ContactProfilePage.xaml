@@ -1,0 +1,206 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="Covid19.Views.Profile.ContactProfilePage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:border="clr-namespace:Syncfusion.XForms.Border;assembly=Syncfusion.Core.XForms"
+    xmlns:button="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+    xmlns:helper="clr-namespace:Covid19.Helpers"
+    xmlns:viewModel="clr-namespace:Covid19.ViewModels.Profile" xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+    Title="Contact Profile Page"
+    NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <!--  Binding context for Chat Profile Page  -->
+    <ContentPage.BindingContext>
+        <viewModel:ContactProfileViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <ScrollView>
+
+            <StackLayout BackgroundColor="{DynamicResource Gray-White}" Spacing="0">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--To display Maps with Border-->
+                    <maps:Map x:Name="mymap" MapType="Street"
+                              IsShowingUser="True" 
+                              Grid.Row="0" 
+                              Grid.ColumnSpan="3"
+                              HeightRequest="{OnIdiom Default=480,Phone=330}">
+                        
+                    </maps:Map>
+
+
+
+                    <!--  Profile name and status with border  -->
+                    <border:SfBorder
+                        x:Name="ProfileNameLabel"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="3"
+                        helper:RTLHelper.CornerRadius="{OnIdiom Default='32,32,0,0'}"
+                        BackgroundColor="{DynamicResource Gray-White}"
+                        BorderWidth="0"
+                        VerticalOptions="End">
+                        <border:SfBorder.Content>
+                            <Grid
+                                Margin="0,32,0,0"
+                                Padding="16,7"
+                                ColumnSpacing="8"
+                                RowSpacing="0">
+
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--  Status Icon  -->
+                                <Label
+                                    Grid.Column="0"
+                                    Margin="0,5,0,0"
+                                    FontSize="10"
+                                    HorizontalTextAlignment="End"
+                                    Style="{StaticResource CommonProfileIconLabelStyle}"
+                                    Text="{StaticResource Available}"
+                                    TextColor="{StaticResource Green}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                                <!--  Profile Name  -->
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    FontFamily="{StaticResource Montserrat-Bold}"
+                                    FontSize="16"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    LineHeight="{OnPlatform Android=1.5,
+                                                            Default=-1}"
+                                    x:Name="NameTxt"
+                                    TextColor="{DynamicResource Gray-900}"
+                                    VerticalOptions="Center"
+                                    VerticalTextAlignment="Center" />
+
+                                <!--  Status  -->
+                                <Label
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    Margin="{OnPlatform Default='0',
+                                                        iOS='0,6,0,0'}"
+                                    FontSize="12"
+                                    HorizontalTextAlignment="Start"
+                                    Style="{StaticResource CommonProfileLabelStyle}"
+                                    Text="Available" />
+
+                                <Label
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    HorizontalOptions="End"
+                                    Style="{StaticResource CommonProfileIconLabelStyle}"
+                                    Text="{StaticResource Next}" />
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ProfileNameCommand}" CommandParameter="{x:Reference ProfileNameLabel}" />
+                                </Grid.GestureRecognizers>
+
+                            </Grid>
+                        </border:SfBorder.Content>
+                    </border:SfBorder>
+                </Grid>
+
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Grid for mail id label and icon  -->
+                <Grid Padding="16" ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,5,0,0"
+                        Style="{StaticResource CommonProfileIconLabelStyle}"
+                        Text="{StaticResource Mail}" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        Style="{StaticResource CommonProfileLabelStyle}"
+                        x:Name="EmailTxt"
+                         />
+
+                </Grid>
+
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+                <!--  Grid for mobile number label and icon  -->
+                <Grid Padding="16" ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,5,0,0"
+                        Style="{StaticResource CommonProfileIconLabelStyle}"
+                        Text="{StaticResource VoiceCall}" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        Style="{StaticResource CommonProfileLabelStyle}"
+                        x:Name="MobileTxt"
+                    />
+
+                </Grid>
+
+                <!--  Grid for mobile number label and icon  -->
+                <Grid Padding="16" ColumnSpacing="16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Label
+                        Grid.Column="0"
+                        Margin="0,5,0,0"
+                        Style="{StaticResource CommonProfileIconLabelStyle}"
+                        Text="{StaticResource Home}" />
+
+                    <Label
+                        Grid.Column="1"
+                        FontFamily="{StaticResource Montserrat-Medium}"
+                        Style="{StaticResource CommonProfileLabelStyle}"
+                        x:Name="AddressTxt"
+                    />
+
+                </Grid>
+
+                <BoxView Style="{StaticResource SeparatorStyle}" />
+
+            </StackLayout>
+
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

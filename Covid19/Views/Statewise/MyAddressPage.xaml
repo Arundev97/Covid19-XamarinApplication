@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:Covid19.Controls"
+             xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+             xmlns:ListView="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms"
+             xmlns:cards="clr-namespace:Syncfusion.XForms.Cards;assembly=Syncfusion.Cards.XForms"
+             xmlns:ViewModel="clr-namespace:Covid19.ViewModels.Statewise"
+             x:Class="Covid19.Views.Statewise.MyAddressPage"
+             x:Name="MyAdressPage"
+             BackgroundColor="{DynamicResource Gray-100}"
+             NavigationPage.HasNavigationBar="False">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <ViewModel:MyAddressViewModel/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.ControlTemplate>
+        <ControlTemplate>
+            <StackLayout x:Name="titleLayout" Spacing="0">
+                <controls:TitleView Title="Statewise Data">
+                    <controls:TitleView.LeadingView>
+                        <!--  Back button command  -->
+                        <buttons:SfButton x:Name="backButton" Command="{Binding Path=BindingContext.BackCommand, Source={x:Reference MyAdressPage}}" 
+                                          CornerRadius="4" Text="{StaticResource Back}"
+                                          CommandParameter="{x:Reference backButton}" Style="{StaticResource IconButtonStyle}"/>
+                        
+                    </controls:TitleView.LeadingView>
+                </controls:TitleView>
+                <ContentPresenter />
+            </StackLayout>
+        </ControlTemplate>
+    </ContentPage.ControlTemplate>
+
+    <ContentPage.Content>
+        <Grid RowSpacing="0" ColumnSpacing="0" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+             
+            <!--  ListView displaying address  -->
+            <ListView:SfListView x:Name="myAddress" AutoFitMode="Height" IsScrollBarVisible="False" Padding="8" ItemSpacing="8" BackgroundColor="Transparent"
+                                 SelectionGesture="Tap" SelectionBackgroundColor="Transparent" SelectionMode="Single" AllowSwiping="True" 
+                                 ItemsSource="{Binding AddressDetails}">
+                <ListView:SfListView.ItemTemplate>
+                    <DataTemplate>
+                        <cards:SfCardView CornerRadius="4" HasShadow="True" WidthRequest="343" BackgroundColor="{DynamicResource Gray-White}" 
+                                          HorizontalOptions="Center" Padding="16,16,8,16"  IndicatorColor="#cf86ff" IndicatorPosition="Top" IndicatorThickness="10">
+                            <Grid ColumnSpacing="8" RowSpacing="8" >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="*"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!--  Name and Type of the address  -->
+                                <Label  LineBreakMode="NoWrap" HorizontalOptions="Start" Grid.ColumnSpan="2"
+                                        VerticalOptions="Center" LineHeight="{OnPlatform Default=-1, Android=1.5}" >
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <Span Text="{Binding state}" FontSize="16" TextColor="{DynamicResource Gray-900}" 
+                                                  FontFamily="{StaticResource Montserrat-SemiBold}"/>
+                                            <Span Text="  "/>
+                                            <Span Text="{Binding statecode}" FontSize="12" TextColor="{DynamicResource Gray-800}"
+                                                  FontFamily="{StaticResource Montserrat-SemiBold}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <!--  Map Pin Icon -->
+                                <Label Text="Active:" Grid.Row="1" Grid.Column="0" FontSize="18"  
+                                       FontFamily="{StaticResource FontIcons}" 
+                                       LineHeight="{OnPlatform Default=-1, Android=1.5}" VerticalOptions="Start"
+                                       TextColor="{DynamicResource Gray-600}"/>
+
+                                <!-- Delivery Address -->
+                                <Label  Text="{Binding active}" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Style="{StaticResource CommonLabelStyle}" 
+                                        FontFamily="{StaticResource Montserrat-Medium}" LineBreakMode="WordWrap" HorizontalOptions="StartAndExpand"
+                                        VerticalOptions="Start"/>
+
+                                <!--  Phone Icon -->
+                                <Label Text="Confirmed:" Grid.Row="2" Grid.Column="0"  FontSize="18" FontFamily="{StaticResource FontIcons}" 
+                                       LineHeight="{OnPlatform Default=-1, Android=1.5}" TextColor="{DynamicResource Gray-600}" />
+
+                                <!--  Contact Number-->
+                                <Label Style="{StaticResource CommonLabelStyle}" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" FontFamily="{StaticResource Montserrat-Medium}"
+                                       VerticalOptions="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <!--<Span Text="Mobile: " />-->
+                                            <Span Text="{Binding confirmed}" TextColor="{DynamicResource Gray-900}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <!--  Phone Icon -->
+                                <Label Text="Deaths:" Grid.Row="3" Grid.Column="0"  FontSize="18" FontFamily="{StaticResource FontIcons}" 
+                                       LineHeight="{OnPlatform Default=-1, Android=1.5}" TextColor="{DynamicResource Gray-600}" />
+
+                                <!--  Contact Number-->
+                                <Label Style="{StaticResource CommonLabelStyle}" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" FontFamily="{StaticResource Montserrat-Medium}"
+                                       VerticalOptions="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <!--<Span Text="Mobile: " />-->
+                                            <Span Text="{Binding deaths}" TextColor="{DynamicResource Gray-900}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                                <Label Text="Date:" Grid.Row="4" Grid.Column="0"  FontSize="18" FontFamily="{StaticResource FontIcons}" 
+                                       LineHeight="{OnPlatform Default=-1, Android=1.5}" TextColor="{DynamicResource Gray-600}" />
+
+                                <!--  Contact Number-->
+                                <Label Style="{StaticResource CommonLabelStyle}" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" FontFamily="{StaticResource Montserrat-Medium}"
+                                       VerticalOptions="Start">
+                                    <Label.FormattedText>
+                                        <FormattedString>
+                                            <!--<Span Text="Mobile: " />-->
+                                            <Span Text="{Binding lastupdatedtime}" TextColor="{DynamicResource Gray-900}"/>
+                                        </FormattedString>
+                                    </Label.FormattedText>
+                                </Label>
+                            </Grid>
+                        </cards:SfCardView>
+                    </DataTemplate>
+                </ListView:SfListView.ItemTemplate>
+            </ListView:SfListView>
+
+           
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
